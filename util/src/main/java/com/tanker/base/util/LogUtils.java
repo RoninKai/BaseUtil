@@ -15,17 +15,26 @@ public class LogUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
+    private static boolean print;
+
+    /**
+     * 打开日志打印
+     */
+    public static void openPrintLog(){
+        print = true;
+    }
+
     /**
      * 默认Dubug模式打印日志
      *
      * @return
      */
-    private static boolean isDebuggable() {
-        return BuildConfig.DEBUG;
+    private static boolean isPrintLog() {
+        return print;
     }
 
     public static void i(String msg) {
-        if (!isDebuggable()) {
+        if (!isPrintLog()) {
             return;
         }
         StackTraceElement[] sElements = new Throwable().getStackTrace();
@@ -33,14 +42,14 @@ public class LogUtils {
     }
 
     public static void i(String tag, String msg) {
-        if (!isDebuggable()) {
+        if (!isPrintLog()) {
             return;
         }
         Log.i(tag, createLog(new Throwable().getStackTrace(), msg));
     }
 
     public static void d(String msg) {
-        if (!isDebuggable()) {
+        if (!isPrintLog()) {
             return;
         }
         StackTraceElement[] sElements = new Throwable().getStackTrace();
@@ -48,14 +57,14 @@ public class LogUtils {
     }
 
     public static void d(String tag, String msg) {
-        if (!isDebuggable()) {
+        if (!isPrintLog()) {
             return;
         }
         Log.d(tag, createLog(new Throwable().getStackTrace(), msg));
     }
 
     public static void e(String msg) {
-        if (!isDebuggable()) {
+        if (!isPrintLog()) {
             return;
         }
         StackTraceElement[] sElements = new Throwable().getStackTrace();
@@ -63,14 +72,14 @@ public class LogUtils {
     }
 
     public static void e(String tag, String msg) {
-        if (!isDebuggable()) {
+        if (!isPrintLog()) {
             return;
         }
         Log.e(tag, createLog(new Throwable().getStackTrace(), msg));
     }
 
     public static void v(String msg) {
-        if (!isDebuggable()) {
+        if (!isPrintLog()) {
             return;
         }
         StackTraceElement[] sElements = new Throwable().getStackTrace();
@@ -78,7 +87,7 @@ public class LogUtils {
     }
 
     public static void v(String tag, String msg) {
-        if (!isDebuggable()) {
+        if (!isPrintLog()) {
             return;
         }
         Log.v(tag, createLog(new Throwable().getStackTrace(), msg));
