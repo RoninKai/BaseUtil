@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.text.TextUtils;
 
 import java.util.List;
 
@@ -145,6 +146,33 @@ public class AppUtils {
             }
         }
         return false;
+    }
+
+    /**
+     * 获取进程名称
+     *
+     * @param context
+     * @return
+     */
+    public static String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager mActivityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager.getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 是否为app线程
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isAppProcess(Context context){
+        return TextUtils.equals(context.getPackageName(),getCurProcessName(context));
     }
 
 }
