@@ -18,30 +18,35 @@ import java.io.OutputStreamWriter;
  */
 public class FileUtil {
 
-    private static final String FILR_NAME = "data";
-
     /**
      * 文件写入
      *
      * @param context
      * @param text
      */
-    public static void writeFile(Context context, String text) {
+    public static void writeFile(Context context, String text, String fileName) {
         FileOutputStream outputStream = null;
         BufferedWriter bufferedWriter = null;
         try {
-            outputStream = context.openFileOutput(FILR_NAME, Context.MODE_PRIVATE);
+            outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
             bufferedWriter.write(text);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (bufferedWriter != null) {
+            if (bufferedWriter != null) {
+                try {
                     bufferedWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            }
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -52,12 +57,12 @@ public class FileUtil {
      * @param context
      * @return
      */
-    public static String readFile(Context context) {
+    public static String readFile(Context context, String fileName) {
         FileInputStream inputStream = null;
         BufferedReader reader = null;
         StringBuilder content = new StringBuilder();
         try {
-            inputStream = context.openFileInput(FILR_NAME);
+            inputStream = context.openFileInput(fileName);
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String line = "";
             while ((line = reader.readLine()) != null) {
@@ -66,12 +71,19 @@ public class FileUtil {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (reader != null) {
+            if (reader != null) {
+                try {
                     reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            }
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return content.toString();
