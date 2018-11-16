@@ -14,8 +14,8 @@ import java.util.Date;
  */
 public class DateUtils {
 
-    public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
-    public static final String YYYY_MM_DD = "yyyy-MM-dd";
+    protected static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+    protected static final String YYYY_MM_DD = "yyyy-MM-dd";
 
     public static String dataToStr(Date date){
         return getDateFormat(YYYY_MM_DD_HH_MM_SS).format(date);
